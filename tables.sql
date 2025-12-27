@@ -23,7 +23,7 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(100),
     role user_role NOT NULL DEFAULT 'user',
-    ui_language_id INT,
+    ui_language_id INT DEFAULT 9,
     CONSTRAINT fk_ui_language 
         FOREIGN KEY (ui_language_id) 
         REFERENCES languages (id_language)

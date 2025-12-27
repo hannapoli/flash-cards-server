@@ -39,8 +39,16 @@ app.get("/", (req, res) => {
     res.render("index.ejs");
 });
 
-app.use('/api/v1', require('./routes/users.routes'));
-//languages, categories, words, collections, uploads, auth (FB?)
+app.use('/api/v1/auth', require('./routes/auth.routes'));
+
+app.use('/api/v1/admin', require('./routes/admin.users.routes'));
+app.use('/api/v1/admin', require('./routes/admin.languages.routes'));
+app.use('/api/v1/admin', require('./routes/admin.categories.routes'));
+app.use('/api/v1/admin', require('./routes/admin.words.routes'));
+
+app.use('/api/v1/user', require('./routes/user.learning.routes'));
+
+//uploads.routes?
 
 app.listen(port, () => {
     console.log(`Servidor activo en el puerto ${port} 📡​`);
