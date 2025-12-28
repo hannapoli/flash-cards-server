@@ -23,7 +23,19 @@ const findUserByEmail = async (email) => {
     }
 }
 
+const findUserByUid = async (firebaseUid) => {
+    try {
+        const result = await pool.query(authQueries.findUserByUid, [firebaseUid]);
+        // console.log(result.rows);
+        return result.rows;
+    } catch (error) {
+        console.error('Error en findUserByUid:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     addUser,
-    findUserByEmail
+    findUserByEmail,
+    findUserByUid
 };

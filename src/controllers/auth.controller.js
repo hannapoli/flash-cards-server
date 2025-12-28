@@ -1,18 +1,19 @@
-const { addUser, findUserByEmail } = require('../models/auth.model');
+const { addUser, findUserByEmail, findUserByUid } = require('../models/auth.model');
 
 const registerUser = async (req, res) => {
-    const { firebaseUid, email, name } = req.body;
+    //uid (Firebase) y email del token verificado
+    const { uid, email } = req.user;
+    const { name } = req.body;
     try {
         const userExists = await findUserByEmail(email);
-        console.log({ userExists });
 
         if (userExists.length > 0) {
             return res.status(409).json({
                 ok: false,
-                message: 'Error: el usuario ya está registrado.'
+                message: 'Error: el usuario con este correo electrónico ya está registrado.'
             });
         }
-        const newUser = await addUser(firebaseUid, email, name);
+        const newUser = await addUser(uid, email, name);
         return res.status(201).json({
             ok: true,
             message: 'Usuario registrado correctamente.',
@@ -27,11 +28,32 @@ const registerUser = async (req, res) => {
     }
 }
 
-const loginUser = async (req, res) => {
-    // Lógica para iniciar sesión de usuario
-}   
+const getRole = async (req, res) => {
+    const { uid } = req.user;
+    try {
+        const users = await findUserByUid(uid);
+        if (users.length === 0) {
+            return res.status(404).json({
+                ok: false,
+                message: 'Usuario no encontrado.'
+            });
+        }
+        const user = users[0];
+        return res.status(200).json({
+            ok: true,
+            name: user.name,
+            role: user.role
+        });
+    } catch (error) {
+        console.error('Error en getRole:', error);
+        return res.status(500).json({
+            ok: false,
+            message: 'Error interno del servidor.'
+        });
+    }
+}
 
 module.exports = {
     registerUser,
-    loginUser
+    getRole
 };

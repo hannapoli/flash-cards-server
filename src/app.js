@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 const frontendUrl = '';
-const frontendLocalhost = '';
+const frontendLocalhost = 'http://localhost:5173';
 const whitelist = [frontendUrl, frontendLocalhost];
 const corsOptions = {
     origin: (origin, callback) => {

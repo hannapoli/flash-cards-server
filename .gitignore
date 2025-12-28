@@ -3,6 +3,7 @@ node_modules
 
 # Variables de entorno
 .env
+firebase-admin-sdk.json
 
 # Directorios de sistema
 .DS_Store       # Mac
