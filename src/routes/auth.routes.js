@@ -4,11 +4,11 @@ const { check } = require('express-validator');
 const { validateInput } = require('../middlewares/validateInput');
 const { registerUser, getRole } = require('../controllers/auth.controller');
 const { verifyToken } = require('../middlewares/verifyToken');
+const { getFullUserData } = require('../middlewares/getFullUserData');
 
 //Registrar un usuario:
 router.post('/register', [
-    verifyToken,
-    //la validación del email se hace en Firebase
+    //la validación del email y la contraseña se hace en Firebase
     check('name')
         .notEmpty().withMessage("Escriba el nombre").bail()
         .trim()
@@ -18,6 +18,6 @@ router.post('/register', [
 ], registerUser);
 
 //Recibir el nombre y el rol del usuario
-router.get('/me', verifyToken, getRole);
+router.get('/me', [verifyToken, getFullUserData], getRole);
 
 module.exports = router;

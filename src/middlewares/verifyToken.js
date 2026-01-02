@@ -25,7 +25,6 @@ const verifyToken = async (req, res, next) => {
         req.user = decodedToken;
 
         next();
-
     } catch (error) {
         console.error('Error al verificar el token:', error);
         return res.status(403).json({
