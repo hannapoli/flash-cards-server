@@ -2,6 +2,7 @@ const { admin } = require('../configs/firebaseAdmin');
 const { getFirestore } = require('firebase-admin/firestore');
 const { findUserByUid, modifyUserByUid, removeUserByUid } = require('../models/admin.users.model');
 const { addUser, findUserByEmail } = require("../models/auth.model");
+const { user } = require('pg/lib/defaults');
 
 const getUserByID = async (req, res) => {
     const { id } = req.params;
@@ -73,6 +74,14 @@ const editUserByID = async (req, res) => {
     const { name, email, role } = req.body;
     // console.log(id, name, email, role);
     try {
+        const userExists = await findUserByEmail(email);
+
+        if (userExists.length > 0) {
+            return res.status(409).json({
+                ok: false,
+                message: 'Error: el usuario con este correo electrónico ya está registrado.'
+            });
+        }
         //Modificamos el usuario en Firebase Auth
         await admin.auth().updateUser(id, {
             email: email,
@@ -126,7 +135,8 @@ const deleteUserByID = async (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            message: 'Usuario eliminado correctamente.'
+            message: 'Usuario eliminado correctamente.',
+            user: deletedUser
         });
     } catch (error) {
         console.error('Error al eliminar el usuario:', error);

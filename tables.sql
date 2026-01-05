@@ -93,15 +93,15 @@ CREATE TABLE user_learning (
 
 -- Datos de prueba:
 INSERT INTO languages (language, code) VALUES
-('Arabic', 'ar'),
-('English', 'en'),
-('French', 'fr'),
-('German', 'de'),
+('Árabe', 'ar'),
+('Inglés', 'en'),
+('Francés', 'fr'),
+('Alemán', 'de'),
 ('Hindi', 'hi'),
-('Japanese', 'ja'),
-('Mandarin Chinese', 'zh'),
-('Portuguese', 'pt'),
-('Spanish', 'es');
+('Japonés', 'ja'),
+('Chino mandarín', 'zh'),
+('Portugués', 'pt'),
+('Español', 'es');
 
 INSERT INTO users (firebase_uid, email, name, role, ui_language_id) VALUES
 ('firebase_admin_001', 'admin@test.com', 'Hector', 'admin', 2),

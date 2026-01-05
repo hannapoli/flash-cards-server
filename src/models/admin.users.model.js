@@ -1,5 +1,5 @@
 const pool = require('../configs/dbConnect');
-const queriesAdminUsers = require('./admin.users.queries');
+const { queriesAdminUsers } = require('./admin.queries');
 
 
 const findUserByUid = async (firebaseUid) => {
@@ -26,7 +26,7 @@ const modifyUserByUid = async (firebaseUid, name, email, role) => {
 const removeUserByUid = async (firebaseUid) => {
     try {
         const result = await pool.query(queriesAdminUsers.removeUserByUid, [firebaseUid]);
-        return result.rows;
+        return result.rows[0];
     } catch (error) {
         console.error('Error en removeUserByUid:', error);
         throw error;

@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 app.use('/api/v1/auth', require('./routes/auth.routes'));
 
 app.use('/api/v1/admin', require('./routes/admin.users.routes'));
-app.use('/api/v1/admin', require('./routes/admin.languages.routes'));
+app.use('/api/v1/admin', require('./routes/admin.lang.routes'));
 app.use('/api/v1/admin', require('./routes/admin.categories.routes'));
 app.use('/api/v1/admin', require('./routes/admin.words.routes'));
 
