@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const { param } = require('express-validator');
-const { validateInput } = require('../middlewares/validateInput');
-const { checkAdmin } = require('../middlewares/checkRole');
-const { verifyToken } = require('../middlewares/verifyToken');
-const { getFullUserData } = require('../middlewares/getFullUserData');
+const { validateInput } = require('../middlewares/validate.input.middleware');
+const { checkAdmin } = require('../middlewares/check.role.middleware');
+const { verifyToken } = require('../middlewares/verify.token.middleware');
+const { getFullUserData } = require('../middlewares/user.data.middleware');
 const { getAllCategories, getCategoryById, createCategory, updateCategoryById, deleteCategoryById } = require('../controllers/admin.categories.controller');
 
-// Ver la lista de todas las categorías:
+// Ver la lista de todas las categorías del idioma:
 router.get('/category/getall/:language_id', [
     verifyToken,
     getFullUserData,
@@ -33,8 +33,8 @@ router.post('/category/create', [
         .trim()
         .isString().withMessage("Escriba un nombre de categoría válido")
         .isLength({ min: 2, max: 50 }).withMessage("Escriba un nombre de categoría válido")
-        //Cualquier letra que empiece por mayúscula y siga con minúsculas (Unicode)
-        .matches(/^\p{Lu}\p{Ll}+$/u).withMessage("Escriba un nombre de categoría válido, empezando por mayúscula"),
+        //Cualquier letra que empiece por mayúscula (Unicode)
+        .matches(/^\p{Lu}[\p{L}\p{S}\p{P}\s]*$/u).withMessage("Escriba un nombre de categoría válido, empezando por mayúscula"),
     validateInput,
     verifyToken,
     getFullUserData,
@@ -51,7 +51,7 @@ router.put('/category/edit/:id', [
         .trim()
         .isString().withMessage("Escriba un nombre de categoría válido")
         .isLength({ min: 2, max: 50 }).withMessage("Escriba un nombre de categoría válido")
-        .matches(/^\p{Lu}\p{Ll}+$/u).withMessage("Escriba un nombre de categoría válido, empezando por mayúscula"),
+        .matches(/^\p{Lu}[\p{L}\p{S}\p{P}\s]*$/u).withMessage("Escriba un nombre de categoría válido, empezando por mayúscula"),
     check('language_id')
         .notEmpty().withMessage("El ID de la categoría es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID de la categoría debe ser un número entero positivo"),

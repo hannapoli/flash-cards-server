@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -24,19 +25,20 @@ const corsOptions = {
     credentials: true
 };
 
-// ============= MIDDLEWARES =============
+// ================================== MIDDLEWARES ==================================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + '/public'));
+app.use('/api/v1/uploads', express.static(path.join(__dirname, 'public/uploads')));
 app.use(cors(corsOptions));
 
-// ============= EJS para la página principal: =============
-app.set("view engine", "ejs");
-app.set("views", __dirname + "/views");
+// ========================== EJS para la página principal: ==========================
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
-// ============= RUTAS =============
-app.get("/", (req, res) => {
-    res.render("index.ejs");
+// ====================================== RUTAS ======================================
+app.get('/', (req, res) => {
+    res.render('index.ejs');
 });
 
 app.use('/api/v1/auth', require('./routes/auth.routes'));
@@ -48,8 +50,7 @@ app.use('/api/v1/admin', require('./routes/admin.words.routes'));
 
 app.use('/api/v1/user', require('./routes/user.learning.routes'));
 
-//uploads.routes?
-
+// =============================== Iniciar el servidor ===============================
 app.listen(port, () => {
     console.log(`Servidor activo en el puerto ${port} 📡​`);
 });

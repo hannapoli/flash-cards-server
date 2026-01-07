@@ -58,6 +58,7 @@ CREATE TABLE uploads (
 CREATE TABLE words (
     id_word SERIAL PRIMARY KEY,
     word VARCHAR(100) NOT NULL,
+    definition TEXT,
     transcription VARCHAR(150),
     example TEXT,
     category_id INT NOT NULL,
@@ -119,10 +120,10 @@ VALUES
 ('dog_172345987.png', 'dog.png', 'image/png', 204800),
 ('cat_172345988.jpg', 'cat.jpg', 'image/jpeg', 189300);
 
-INSERT INTO words (word, transcription, example, category_id)
+INSERT INTO words (word, definition, transcription, example, category_id)
 VALUES
-('dog', '/dɒɡ/', 'The dog is playing in the garden.', 1),
-('cat', '/kæt/', 'The cat is sleeping on the sofa.', 1);
+('dog', 'A domesticated carnivorous mammal.', '/dɒɡ/', 'The dog is playing in the garden.', 1),
+('cat', 'A small domesticated carnivorous mammal.', '/kæt/', 'The cat is sleeping on the sofa.', 1);
 
 INSERT INTO user_learning (user_id, word_id, status)
 VALUES

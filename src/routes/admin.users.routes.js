@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const { param } = require('express-validator');
-const { validateInput } = require('../middlewares/validateInput');
-const { checkAdmin } = require('../middlewares/checkRole');
-const { verifyToken } = require('../middlewares/verifyToken');
-const { getFullUserData } = require('../middlewares/getFullUserData');
+const { validateInput } = require('../middlewares/validate.input.middleware');
+const { checkAdmin } = require('../middlewares/check.role.middleware');
+const { verifyToken } = require('../middlewares/verify.token.middleware');
+const { getFullUserData } = require('../middlewares/user.data.middleware');
 const { getUserByID, createUser, editUserByID, deleteUserByID } = require('../controllers/admin.users.controller');
 
 // Ver la información de un usuario encontrado por su ID:

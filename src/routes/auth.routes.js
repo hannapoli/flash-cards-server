@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { validateInput } = require('../middlewares/validateInput');
+const { validateInput } = require('../middlewares/validate.input.middleware');
 const { registerUser, getRole } = require('../controllers/auth.controller');
-const { verifyToken } = require('../middlewares/verifyToken');
-const { getFullUserData } = require('../middlewares/getFullUserData');
+const { verifyToken } = require('../middlewares/verify.token.middleware');
+const { getFullUserData } = require('../middlewares/user.data.middleware');
 
 //Registrar un usuario:
 router.post('/register', [
