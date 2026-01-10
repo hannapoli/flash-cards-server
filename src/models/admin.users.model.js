@@ -1,6 +1,15 @@
 const pool = require('../configs/dbConnect');
 const { queriesAdminUsers } = require('./admin.queries');
 
+const findAllUsers = async () => {
+    try {
+        const result = await pool.query(queriesAdminUsers.findAllUsers);
+        return result.rows || [];
+    } catch (error) {
+        console.error('Error en findAllUsers:', error);
+        throw error;
+    }
+};
 
 const findUserByUid = async (firebaseUid) => {
     try {
@@ -36,6 +45,7 @@ const removeUserByUid = async (firebaseUid) => {
 
 
 module.exports = {
+    findAllUsers,
     findUserByUid,
     modifyUserByUid,
     removeUserByUid

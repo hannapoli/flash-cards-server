@@ -1,8 +1,23 @@
 const { admin } = require('../configs/firebaseAdmin');
 const { getFirestore } = require('firebase-admin/firestore');
-const { findUserByUid, modifyUserByUid, removeUserByUid } = require('../models/admin.users.model');
+const { findAllUsers, findUserByUid, modifyUserByUid, removeUserByUid } = require('../models/admin.users.model');
 const { addUser, findUserByEmail } = require("../models/auth.model");
-const { user } = require('pg/lib/defaults');
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await findAllUsers();
+        return res.status(200).json({
+            ok: true,
+            users: users
+        });
+    } catch (error) {
+        console.error('Error al obtener la lista de usuarios:', error);
+        return res.status(500).json({
+            ok: false,
+            message: 'Error interno del servidor al obtener la lista de usuarios.'
+        });
+    }
+};
 
 const getUserByID = async (req, res) => {
     const { id } = req.params;
@@ -75,8 +90,7 @@ const editUserByID = async (req, res) => {
     // console.log(id, name, email, role);
     try {
         const userExists = await findUserByEmail(email);
-
-        if (userExists.length > 0) {
+        if (userExists.length > 0 && userExists[0].firebase_uid !== id) {
             return res.status(409).json({
                 ok: false,
                 message: 'Error: el usuario con este correo electrónico ya está registrado.'
@@ -148,6 +162,7 @@ const deleteUserByID = async (req, res) => {
 };
 
 module.exports = {
+    getAllUsers,
     getUserByID,
     createUser,
     editUserByID,

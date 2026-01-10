@@ -6,15 +6,17 @@ const { validateInput } = require('../middlewares/validate.input.middleware');
 const { checkAdmin } = require('../middlewares/check.role.middleware');
 const { verifyToken } = require('../middlewares/verify.token.middleware');
 const { getFullUserData } = require('../middlewares/user.data.middleware');
-const { getUserByID, createUser, editUserByID, deleteUserByID } = require('../controllers/admin.users.controller');
+const { getAllUsers, getUserByID, createUser, editUserByID, deleteUserByID } = require('../controllers/admin.users.controller');
+
+//Ver la lista de todos los usuarios:
+router.get('/users/getall', [
+    verifyToken,
+    getFullUserData,
+    checkAdmin
+], getAllUsers);
 
 // Ver la información de un usuario encontrado por su ID:
 router.get('/users/get/:id', [
-    param('id')
-        .notEmpty().withMessage('El UID es obligatorio')
-        .isLength({ min: 20 }).withMessage('El UID debe tener por lo menos 20 caracteres')
-        .matches(/^[A-Za-z0-9\-_]+$/).withMessage('El UID solo puede contener letras, números, guiones y guiones bajos'),
-    validateInput,
     verifyToken,
     getFullUserData,
     checkAdmin
@@ -29,6 +31,7 @@ router.post('/users/create', [
         .isString().withMessage("Escriba un nómbre válido")
         .isLength({ min: 3, max: 50 }).withMessage("Escriba un nómbre válido"),
     check("role")
+        .notEmpty().withMessage("Escriba el rol").bail()
         .trim()
         .isIn(["admin", "user"]).withMessage("El rol debe ser 'admin' o 'user'."),
     validateInput,
@@ -51,6 +54,7 @@ router.put('/users/edit/:id', [
         .isString().withMessage("Escriba un nómbre válido")
         .isLength({ min: 3, max: 50 }).withMessage("Escriba un nómbre válido"),
     check("role")
+        .notEmpty().withMessage("Escriba el rol").bail()
         .trim()
         .isIn(["admin", "user"]).withMessage("El rol debe ser 'admin' o 'user'."),
     validateInput,

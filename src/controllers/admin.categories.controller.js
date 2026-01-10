@@ -43,13 +43,6 @@ const getCategoryById = async (req, res) => {
 const createCategory = async (req, res) => {
     const { category, language_id } = req.body;
     try {
-        const categoryExists = await findCategoryByName(category);
-        if (categoryExists.length > 0) {
-            return res.status(409).json({
-                ok: false,
-                message: 'Error: la categoría ya está registrada.'
-            });
-        }
         const newCategory = await addCategory(category, language_id);
         return res.status(201).json({
             ok: true,
@@ -69,13 +62,6 @@ const updateCategoryById = async (req, res) => {
     const { id } = req.params;
     const { category, language_id } = req.body;
     try {
-        const categoryExists = await findCategoryByName(category);
-        if (categoryExists.length > 0) {
-            return res.status(409).json({
-                ok: false,
-                message: 'Error: la categoría ya está registrada.'
-            });
-        }
         const updatedCategory = await modifyCategoryByID(category, language_id, id);
         if (!updatedCategory) {
             return res.status(404).json({

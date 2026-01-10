@@ -49,14 +49,6 @@ const createWord = async (req, res) => {
         const img = req.file;
         let imageId = null;
 
-        const wordExists = await findWordByName(word);
-        if (wordExists.length > 0) {
-            return res.status(409).json({
-                ok: false,
-                message: 'Error: la palabra ya está registrada.'
-            });
-        }
-
         if (img) {
             const savedImage = await saveImageMetadata(img.filename, img.originalname, img.mimetype, img.size);
             imageId = savedImage.id_upload;
@@ -88,14 +80,6 @@ const updateWordById = async (req, res) => {
             return res.status(404).json({
                 ok: false,
                 message: 'Palabra no encontrada. Comprueba el ID.'
-            });
-        }
-
-        const wordExists = await findWordByName(word);
-        if (wordExists.length > 0 && wordExists[0].id_word !== parseInt(id)) {
-            return res.status(409).json({
-                ok: false,
-                message: 'Error: la palabra ya está registrada.'
             });
         }
 
