@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
-const { param } = require('express-validator');
+const { check, param } = require('express-validator');
 const { validateInput } = require('../middlewares/validate.input.middleware');
 const { checkAdmin } = require('../middlewares/check.role.middleware');
 const { verifyToken } = require('../middlewares/verify.token.middleware');

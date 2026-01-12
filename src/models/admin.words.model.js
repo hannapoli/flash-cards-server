@@ -25,7 +25,7 @@ const findWordByID = async (wordId) => {
 const findWordByName = async (word) => {
     try {
         const result = await pool.query(queriesAdminWords.findWordByName, [word]);
-        return result.rows || [];
+        return result.rows[0];
     } catch (error) {
         console.error('Error en findWordByName:', error);
         throw error;

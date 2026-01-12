@@ -18,6 +18,7 @@ const verifyToken = async (req, res, next) => {
             msg: "No hay token en la petición."
         });
     };
+    
     try {
 
         const decodedToken = await admin.auth().verifyIdToken(token);

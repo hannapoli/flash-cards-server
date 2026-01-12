@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { findAllWords, findWordByID, findWordByName, saveImageMetadata, addWord, modifyWordByID, removeImageByID, removeWordByID } = require('../models/admin.words.model');
+const { findAllWords, findWordByID, saveImageMetadata, addWord, modifyWordByID, removeImageByID, removeWordByID } = require('../models/admin.words.model');
 const url = process.env.BACKEND_URL;
 
 const getAllWords = async (req, res) => {

@@ -5,9 +5,9 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const frontendUrl = '';
-const frontendLocalhost = 'http://localhost:5173';
-const whitelist = [frontendUrl, frontendLocalhost];
+const frontendUrl = `${process.env.FRONT_URL}`;
+const frontendLocalHost = `${process.env.FRONT_LOCALHOST}`;
+const whitelist = [frontendUrl, frontendLocalHost];
 const corsOptions = {
     origin: (origin, callback) => {
         //!origin para permitir las peticiones del Postman
@@ -20,7 +20,7 @@ const corsOptions = {
         }
     },
     optionsSuccessStatus: 200,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 };
