@@ -49,6 +49,7 @@ app.use('/api/v1/admin', require('./routes/admin.categories.routes'));
 app.use('/api/v1/admin', require('./routes/admin.words.routes'));
 
 app.use('/api/v1/user', require('./routes/user.learning.routes'));
+app.use('/api/v1/user', require('./routes/user.progress.routes'));
 
 // =============================== Iniciar el servidor ===============================
 app.listen(port, () => {

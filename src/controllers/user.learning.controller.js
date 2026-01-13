@@ -95,10 +95,7 @@ const getAllWordsOfCategoryByUserId = async (req, res) => {
 
 const getWordCardByUserId = async (req, res) => {
     const { id_user } = req.user;
-    // const { word_id } = req.params;
-    const word_id = Number(req.params.word_id);
-
-    console.log(typeof word_id, 'word_id getWordCardByUserId');
+    const { word_id } = req.params;
     try {
         const wordFound = await findWordByID(word_id);
         if (!wordFound) {
