@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./configs/swagger');
 require('dotenv').config();
 
 const app = express();
@@ -40,6 +42,12 @@ app.set('views', __dirname + '/views');
 app.get('/', (req, res) => {
     res.render('index.ejs');
 });
+
+// ============================== Documentación Swagger ===============================
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'Flash Cards API Documentation'
+}));
 
 app.use('/api/v1/auth', require('./routes/auth.routes'));
 

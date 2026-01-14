@@ -23,8 +23,12 @@ La API de "Flash Cards" desarrollada con el stack de PERN (PostgreSQL, Express, 
    - Duplica el archivo `.env.template` y renómbralo a `.env`
    - Completa las siguientes variables:
      ```env
-     PORT=3000
-     BACKEND_URL=http://localhost:3000
+     PORT=4001 (en mi caso uso este puerto)
+     BACKEND_URL=http://localhost:4001
+
+        # Las URLs del Frontend para configurar CORS
+     FRONT_URL
+     FRONT_LOCALHOST
      
      # PostgreSQL
      Construye tu cadena de conexión:
@@ -32,6 +36,7 @@ La API de "Flash Cards" desarrollada con el stack de PERN (PostgreSQL, Express, 
      
      # Firebase Admin SDK
      FIREBASE_SERVICE_ACCOUNT - el archivo JSON de credenciales que obtenerás de Firebase.
+     
      ```
 
 5. Configura la base de datos PostgreSQL:
@@ -43,7 +48,7 @@ La API de "Flash Cards" desarrollada con el stack de PERN (PostgreSQL, Express, 
     npm run dev
     ```
 
-7. La API estará disponible en el puerto indicado: `http://localhost:3000`
+7. La API estará disponible en el puerto indicado: `http://localhost:4001`
 
 ## ¿Qué hace esta aplicación?
 
@@ -170,6 +175,9 @@ flash-cards-server/
 - **Multer** - Subida de archivos
 - **pg** - Cliente de PostgreSQL
 - **dotenv** - Variables de entorno
+- **swagger-jsdoc** - Generación de documentación OpenAPI desde comentarios JSDoc
+- **swagger-ui-express** - Interfaz interactiva de documentación API
+- **EJS** - Motor de plantillas (para vistas opcionales)
 
 ## Metodología de Desarrollo
 
@@ -177,3 +185,60 @@ Este proyecto se desarrolló siguiendo metodología ágil SCRUM:
 - Sprints 
 - Backlog de tareas, priorización y planificación (Trello)
 - Control de versiones con Git.
+
+La API está desplegada en [Render](https://flash-cards-server-pfxv.onrender.com).
+
+## Documentación de la API con Swagger
+
+La API está completamente documentada con **Swagger/OpenAPI 3.0**. Puedes explorar todos los endpoints, ver ejemplos de peticiones y respuestas, y probar la API directamente desde la interfaz interactiva.
+
+### Acceder a la Documentación
+
+Una vez que el servidor esté corriendo, accede a la documentación en:
+
+```
+http://localhost:4001/api-docs
+```
+
+### Cómo usar Swagger para probar la API
+
+1. **Inicia el servidor**: `npm run dev`
+2. **Abre la documentación**: Navega a `http://localhost:4001/api-docs`
+3. **Autenticación** (para rutas protegidas):
+   - Haz clic en el botón "Authorize" en la parte superior
+   - Obtén un token JWT desde Firebase Authentication (desde el cliente)
+   - Ingresa el token en el formato: `Bearer tu_token_jwt`
+   - Haz clic en "Authorize"
+4. **Prueba los endpoints**:
+   - Selecciona un endpoint
+   - Haz clic en "Try it out"
+   - Completa los parámetros requeridos
+   - Haz clic en "Execute"
+   - Ve la respuesta en tiempo real
+
+### Implementación Técnica
+
+La documentación se implementó utilizando:
+
+- **swagger-jsdoc**: Para generar la especificación OpenAPI desde comentarios JSDoc en el código
+- **swagger-ui-express**: Para la interfaz interactiva de Swagger UI
+
+**Archivos clave:**
+- `src/configs/swagger.js`: Configuración general de Swagger (schemas, tags, security)
+- `src/routes/*.js`: Cada archivo de rutas incluye anotaciones JSDoc con la documentación de los endpoints
+- `src/app.js`: Integración de Swagger UI en la ruta `/api-docs`
+
+### Schemas Documentados
+
+Los siguientes modelos están completamente documentados en Swagger:
+
+- **User**: Usuario con sus propiedades (id, email, name, role)
+- **Language**: Idioma (id, nombre, código ISO)
+- **Category**: Categoría (id, nombre, idioma)
+- **Word**: Palabra con toda su información (definición, transcripción, ejemplo, imagen)
+- **Progress**: Progreso de aprendizaje (total, aprendidas, porcentaje)
+- **Error**: Formato de respuestas de error
+
+## Licencia
+
+Proyecto educativo - Todos los derechos reservados
