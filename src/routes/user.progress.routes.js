@@ -5,7 +5,7 @@ const { validateInput } = require('../middlewares/validate.input.middleware');
 const { verifyToken } = require('../middlewares/verify.token.middleware');
 const { getFullUserData } = require('../middlewares/user.data.middleware');
 const { checkUser } = require('../middlewares/check.role.middleware');
-const { getLanguageProgress, getProgressInAllUserCategories, getProgressInOneUserCategory } = require('../controllers/user.progress.controller');
+const { getLanguageProgress, getProgressInAllUserCategories, getProgressInOneUserCategory, getProgressInAllUserLanguages } = require('../controllers/user.progress.controller');
 
 // Obtener el progreso del usuario en una categoría específica:
 router.get('/progress/categories/:category_id', [
@@ -39,5 +39,12 @@ router.get('/progress/languages/:language_id', [
     getFullUserData,
     checkUser
 ], getLanguageProgress);
+
+// Obtener el progreso del usuario en todos los idiomas:
+router.get('/progress/languages', [
+    verifyToken,
+    getFullUserData,
+    checkUser
+], getProgressInAllUserLanguages);
 
 module.exports = router;

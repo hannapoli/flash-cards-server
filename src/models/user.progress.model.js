@@ -31,8 +31,19 @@ const checkProgressInAllCategoriesOfALanguage = async (userId, languageId) => {
     }
 };
 
+const checkProgressInAllUserLanguages = async (userId) => {
+    try {
+        const result = await pool.query(queriesUserProgress.checkProgressInAllUserLanguages, [userId]);
+        return result.rows || [];
+    } catch (error) {
+        console.error('Error en checkProgressInAllUserLanguages:', error);
+        throw error;
+    }
+};
+
 module.exports = {
     checkProgressInOneUserCategory,
     checkProgressInAllUserCategories,
-    checkProgressInAllCategoriesOfALanguage
+    checkProgressInAllCategoriesOfALanguage,
+    checkProgressInAllUserLanguages
 };

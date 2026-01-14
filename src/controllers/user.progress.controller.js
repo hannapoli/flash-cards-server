@@ -1,4 +1,4 @@
-const {checkProgressInOneUserCategory, checkProgressInAllUserCategories, checkProgressInAllCategoriesOfALanguage} = require('../models/user.progress.model');
+const {checkProgressInOneUserCategory, checkProgressInAllUserCategories, checkProgressInAllCategoriesOfALanguage, checkProgressInAllUserLanguages} = require('../models/user.progress.model');
 
 const getProgressInOneUserCategory = async (req, res) => {
     const { id_user } = req.user;
@@ -32,6 +32,7 @@ const getProgressInAllUserCategories = async (req, res) => {
         return res.status(200).json({
             ok: true,
             progress: progressData.map(cat => ({
+                id_category: cat.id_category,
                 category: cat.category,
                 totalWords: Number(cat.total_words),
                 learnedWords: Number(cat.learned_words),
@@ -72,8 +73,34 @@ const getLanguageProgress = async (req, res) => {
     }
 };
 
+const getProgressInAllUserLanguages = async (req, res) => {
+    const { id_user } = req.user;
+
+    try {
+        const progressData = await checkProgressInAllUserLanguages(id_user);
+        return res.status(200).json({
+            ok: true,
+            progress: progressData.map(lang => ({
+                id_language: lang.id_language,
+                language: lang.language,
+                totalWords: Number(lang.total_words),
+                learnedWords: Number(lang.learned_words),
+                progressPercentage: lang.total_words === 0
+                    ? 0
+                    : Math.round((Number(lang.learned_words) / Number(lang.total_words)) * 100)
+            }))
+        });
+    } catch (error) {
+        console.error('Error al obtener el progreso en todos los idiomas del usuario:', error);
+        return res.status(500).json({
+            ok: false,
+            message: 'Error interno del servidor.'
+        });
+    }
+};
 module.exports = {
     getProgressInOneUserCategory,
     getProgressInAllUserCategories,
-    getLanguageProgress
+    getLanguageProgress,
+    getProgressInAllUserLanguages
 };
