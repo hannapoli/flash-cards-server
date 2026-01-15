@@ -41,6 +41,17 @@ router.get('/users/getall', [
     checkAdmin
 ], getAllUsers);
 
+router.get('/users/get/:id', [
+    param('id')
+        .notEmpty().withMessage('El UID es obligatorio')
+        .isLength({ min: 20 }).withMessage('El UID debe tener por lo menos 20 caracteres')
+        .matches(/^[A-Za-z0-9\-_]+$/).withMessage('El UID solo puede contener letras, números, guiones y guiones bajos'),
+    validateInput,
+    verifyToken,
+    getFullUserData,
+    checkAdmin
+], getUserByID);
+
 /**
  * @swagger
  * /admin/users/create:
