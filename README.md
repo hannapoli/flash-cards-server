@@ -129,7 +129,7 @@ flash-cards-server/
 
 ### Administrador
 - `GET /admin/users` - Ver todos los usuarios
-- `POST /admin/users/create` - Crear usuario
+- `POST /admin/users` - Crear usuario
 - `PUT /admin/users/:id` - Actualizar usuario
 - `DELETE /admin/users/:id` - Eliminar usuario
 - `GET /admin/languages` - CRUD de idiomas

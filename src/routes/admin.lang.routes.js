@@ -8,14 +8,14 @@ const { getFullUserData } = require('../middlewares/user.data.middleware');
 const { getAllLanguages, getLangById, createLanguage, updateLangById, deleteLangById } = require('../controllers/admin.lang.controller');
 
 // Ver la lista de todos los idiomas:
-router.get('/lang/getall', [
+router.get('/languages', [
     verifyToken,
     getFullUserData,
     checkAdmin
 ], getAllLanguages);
 
 // Ver la información de un idioma encontrado por su ID:
-router.get('/lang/get/:id', [
+router.get('/languages/:id', [
     param('id')
         .notEmpty().withMessage("El ID del idioma es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID del idioma debe ser un número entero positivo"),
@@ -26,7 +26,7 @@ router.get('/lang/get/:id', [
 ], getLangById);
 
 // Crear un idioma nuevo:
-router.post('/lang/create', [
+router.post('/languages', [
     check('language')
         .notEmpty().withMessage("Escriba el idioma").bail()
         .trim()
@@ -47,7 +47,7 @@ router.post('/lang/create', [
 ], createLanguage);
 
 // Modificar la información de un idioma encontrado por su ID:
-router.put('/lang/edit/:id', [
+router.put('/languages/:id', [
     param('id')
         .notEmpty().withMessage("El ID del idioma es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID del idioma debe ser un número entero positivo"),
@@ -69,7 +69,7 @@ router.put('/lang/edit/:id', [
 ], updateLangById);
 
 // Eliminar el idioma encontrado por su ID:
-router.delete('/lang/delete/:id', [
+router.delete('/languages/:id', [
     param('id')
         .notEmpty().withMessage("El ID del idioma es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID del idioma debe ser un número entero positivo"),

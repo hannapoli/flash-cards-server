@@ -76,8 +76,8 @@ Cada archivo de rutas (`src/routes/*.js`) incluye comentarios JSDoc con la espec
 - `GET /user/progress/languages` - Progreso en todos los idiomas
 
 ### Admin - Usuarios (`admin.users.routes.js`)
-- `GET /admin/users/getall` - Listar todos los usuarios
-- `POST /admin/users/create` - Crear nuevo usuario
+- `GET /admin/users` - Listar todos los usuarios
+- `POST /admin/users` - Crear nuevo usuario
 
 ## Categorización por Tags
 

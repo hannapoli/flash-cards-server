@@ -9,7 +9,7 @@ const { getAllUsers, getUserByID, createUser, editUserByID, deleteUserByID } = r
 
 /**
  * @swagger
- * /admin/users/getall:
+ * /admin/users:
  *   get:
  *     summary: Obtener todos los usuarios
  *     tags: [Admin - Usuarios]
@@ -35,13 +35,13 @@ const { getAllUsers, getUserByID, createUser, editUserByID, deleteUserByID } = r
  *       403:
  *         description: Acceso denegado - No es administrador
  */
-router.get('/users/getall', [
+router.get('/users', [
     verifyToken,
     getFullUserData,
     checkAdmin
 ], getAllUsers);
 
-router.get('/users/get/:id', [
+router.get('/users/:id', [
     param('id')
         .notEmpty().withMessage('El UID es obligatorio')
         .isLength({ min: 20 }).withMessage('El UID debe tener por lo menos 20 caracteres')
@@ -54,7 +54,7 @@ router.get('/users/get/:id', [
 
 /**
  * @swagger
- * /admin/users/create:
+ * /admin/users:
  *   post:
  *     summary: Crear un nuevo usuario
  *     tags: [Admin - Usuarios]
@@ -99,7 +99,7 @@ router.get('/users/get/:id', [
  *       403:
  *         description: No es administrador
  */
-router.post('/users/create', [
+router.post('/users', [
     //la validación del email y la contraseña se hace en Firebase
     check('name')
         .notEmpty().withMessage("Escriba el nombre").bail()
@@ -117,7 +117,7 @@ router.post('/users/create', [
 ], createUser);
 
 // Modificar la información de un usuario encontrado por su ID:
-router.put('/users/edit/:id', [
+router.put('/users/:id', [
     //la validación del email y la contraseña se hace en Firebase
     param('id')
         .notEmpty().withMessage('El UID es obligatorio')
@@ -140,7 +140,7 @@ router.put('/users/edit/:id', [
 ], editUserByID);
 
 // Eliminar el usuario encontrado por su ID:
-router.delete('/users/delete/:id', [
+router.delete('/users/:id', [
     param('id')
         .notEmpty().withMessage('El UID es obligatorio')
         .isLength({ min: 20 }).withMessage('El UID debe tener por lo menos 20 caracteres')

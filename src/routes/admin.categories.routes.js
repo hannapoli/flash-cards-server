@@ -8,14 +8,14 @@ const { getFullUserData } = require('../middlewares/user.data.middleware');
 const { getAllCategories, getCategoryById, createCategory, updateCategoryById, deleteCategoryById } = require('../controllers/admin.categories.controller');
 
 // Ver la lista de todas las categorías del idioma:
-router.get('/category/getall/:language_id', [
+router.get('/languages/:language_id/categories', [
     verifyToken,
     getFullUserData,
     checkAdmin
 ], getAllCategories);
 
 // Ver la información de una categoría encontrada por su ID:
-router.get('/category/get/:id', [
+router.get('/categories/:id', [
     param('id')
         .notEmpty().withMessage("El ID de la categoría es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID de la categoría debe ser un número entero positivo"),
@@ -26,7 +26,7 @@ router.get('/category/get/:id', [
 ], getCategoryById);
 
 // Crear una categoría nueva:
-router.post('/category/create', [
+router.post('/categories', [
     check('category')
         .notEmpty().withMessage("Escriba la categoría").bail()
         .trim()
@@ -41,7 +41,7 @@ router.post('/category/create', [
 ], createCategory);
 
 // Modificar la información de una categoría encontrada por su ID:
-router.put('/category/edit/:id', [
+router.put('/categories/:id', [
     param('id')
         .notEmpty().withMessage("El ID de la categoría es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID de la categoría debe ser un número entero positivo"),
@@ -61,7 +61,7 @@ router.put('/category/edit/:id', [
 ], updateCategoryById);
 
 // Eliminar la categoría encontrada por su ID:
-router.delete('/category/delete/:id', [
+router.delete('/categories/:id', [
     param('id')
         .notEmpty().withMessage("El ID de la categoría es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID de la categoría debe ser un número entero positivo"),

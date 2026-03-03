@@ -9,14 +9,14 @@ const { uploadSingleImg } = require('../middlewares/upload.middleware');
 const { getAllWords, getWordyById, createWord, updateWordById, deleteWordById } = require('../controllers/admin.words.controller');
 
 // Ver la lista de todas las palabras de la categoría:
-router.get('/word/getall/:category_id', [
+router.get('/categories/:category_id/words', [
     verifyToken,
     getFullUserData,
     checkAdmin
 ], getAllWords);
 
 // Ver la información de una palabra encontrada por su ID:
-router.get('/word/get/:id', [
+router.get('/words/:id', [
     param('id')
         .notEmpty().withMessage("El ID de la palabra es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID de la palabra debe ser un número entero positivo"),
@@ -27,7 +27,7 @@ router.get('/word/get/:id', [
 ], getWordyById);
 
 // Crear una palabra nueva:
-router.post('/word/create', [
+router.post('/words', [
     uploadSingleImg,
     check('word')
         .notEmpty().withMessage("Escriba la palabra").bail()
@@ -58,7 +58,7 @@ router.post('/word/create', [
 ], createWord);
 
 // Modificar la información de una palabra encontrada por su ID:
-router.put('/word/edit/:id', [
+router.put('/words/:id', [
     uploadSingleImg,
     param('id')
         .notEmpty().withMessage("El ID de la palabra es obligatorio").bail()
@@ -91,7 +91,7 @@ router.put('/word/edit/:id', [
 ], updateWordById);
 
 // Eliminar la palabra encontrada por su ID:
-router.delete('/word/delete/:id', [
+router.delete('/words/:id', [
     param('id')
         .notEmpty().withMessage("El ID de la palabra es obligatorio").bail()
         .isInt({ gt: 0 }).withMessage("El ID de la palabra debe ser un número entero positivo"),
